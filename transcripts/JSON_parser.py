@@ -12,6 +12,8 @@ OVERLAP    = 40    # words overlap between consecutive chunks
 
 @dataclass
 class Chunk:
+    video_number: int
+    video_title:  str
     start: float
     end:   float
     text:  str
@@ -44,19 +46,27 @@ def parse_json3(filepath: Path, chunk_size: int = CHUNK_SIZE) -> list[dict]:
     return words
 
 
-def chunk_words(words: list[dict], chunk_size: int = CHUNK_SIZE, overlap: int = OVERLAP) -> list[Chunk]:
+def chunk_words(
+    words: list[dict],
+    video_number: int,
+    video_title: str,
+    chunk_size: int = CHUNK_SIZE,
+    overlap: int = OVERLAP,
+) -> list[Chunk]:
     """Sliding-window chunker with overlap."""
     chunks = []
     i = 0
     step = max(1, chunk_size - overlap)
 
     while i < len(words):
-        window       = words[i : i + chunk_size]
-        combined     = " ".join(w["text"] for w in window)
+        window   = words[i : i + chunk_size]
+        combined = " ".join(w["text"] for w in window)
         chunks.append(Chunk(
-            start = window[0]["start"],
-            end   = window[-1]["end"],
-            text  = combined,
+            video_number = video_number,
+            video_title  = video_title,
+            start        = window[0]["start"],
+            end          = window[-1]["end"],
+            text         = combined,
         ))
         i += step
 
@@ -71,13 +81,19 @@ def run_all():
     print(f"Found {len(json3_files)} JSON3 files.\n")
 
     for filepath in json3_files:
-        words  = parse_json3(filepath)
-        chunks = chunk_words(words)
+        # Parse video_number and video_title from filename
+        # e.g. "01_1. Introduction and Scope.en.json3"
+        stem         = filepath.name.split(".en.json3")[0]          # "01_1. Introduction and Scope"
+        seq_str, _, title_part = stem.partition("_")                # "01", "1. Introduction and Scope"
+        video_number = int(seq_str)
+        video_title  = title_part.strip()
 
-        # Convert dataclasses -> plain dicts (only start, end, text)
+        words  = parse_json3(filepath)
+        chunks = chunk_words(words, video_number=video_number, video_title=video_title)
+
         all_chunks.extend(asdict(c) for c in chunks)
         safe_name = filepath.name.encode("ascii", errors="replace").decode("ascii")
-        print(f"  {safe_name:<60}  {len(words):>5} words  ->  {len(chunks):>3} chunks")
+        print(f"  [{video_number:>2}] {safe_name:<58}  {len(words):>5} words  ->  {len(chunks):>3} chunks")
 
     # Save output
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
