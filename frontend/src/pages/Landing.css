@@ -1,0 +1,318 @@
+/* Landing.css — theme-aware, scoped under .app-shell.dark / .app-shell.light */
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/*  LAYOUT  (no colours — shared by both themes)                              */
+/* ────────────────────────────────────────────────────────────────────────── */
+
+.landing {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 80px 24px 40px;
+  transition: background 0.35s ease;
+}
+
+@keyframes aceternity-spotlight {
+  0%   { opacity: 0; transform: translate(-72%, -62%) scale(0.5); }
+  100% { opacity: 1; transform: translate(-50%, -40%) scale(1); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.landing-card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  min-height: 540px;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Thin top-edge highlight */
+.landing-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.landing-left {
+  flex: 1;
+  padding: 3rem 3rem 3rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  position: relative;
+  z-index: 2;
+  justify-content: center;
+}
+
+.landing-right {
+  flex: 1;
+  position: relative;
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.landing-wave {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: -0.2rem;
+}
+
+.landing-headline {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  margin: 0;
+  transition: color 0.35s ease;
+}
+
+.landing-typewriter-accent {
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+}
+
+.landing-gradient {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.landing-sub {
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 420px;
+  transition: color 0.35s ease;
+}
+
+.landing-cta-wrap { align-self: flex-start; }
+
+.landing-liquid-btn {
+  position: relative;
+  padding: 0.85rem 2.4rem !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.05em;
+  border-radius: 50px !important;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  transition:
+    transform    0.25s cubic-bezier(0.1, 0.4, 0.2, 1),
+    box-shadow   0.25s cubic-bezier(0.1, 0.4, 0.2, 1),
+    background   0.25s ease,
+    color        0.25s ease,
+    border-color 0.25s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+.landing-liquid-btn:hover  { transform: translateY(-3px) scale(1.04); }
+.landing-liquid-btn:active { transform: translateY(0) scale(0.98); }
+
+.landing-stats {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.stat-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  min-width: 80px;
+  transition: background 0.35s ease, border-color 0.35s ease;
+}
+.stat-val {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition: color 0.35s ease;
+}
+.stat-lbl {
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.35s ease;
+}
+
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/*  DARK THEME                                                                 */
+/* ────────────────────────────────────────────────────────────────────────── */
+
+.app-shell.dark .landing {
+  background: #0d0d0f;
+}
+
+.app-shell.dark .landing-card {
+  background: linear-gradient(160deg, #141416 0%, #1a1a1d 100%);
+  border: 1px solid rgba(180,180,190,0.09);
+  box-shadow:
+    0 8px 64px rgba(0,0,0,0.72),
+    0 1px 0  rgba(255,255,255,0.04) inset,
+    0 0 0 1px rgba(200,200,220,0.04) inset;
+}
+
+.app-shell.dark .landing-card::before {
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(210,210,230,0.18) 40%,
+    rgba(210,210,230,0.18) 60%,
+    transparent);
+}
+
+.app-shell.dark .landing-headline { color: #d8dce8; }
+
+.app-shell.dark .landing-typewriter-accent {
+  color: #a0a0c0;
+}
+.app-shell.dark .landing-gradient {
+  background: linear-gradient(135deg, #e0e0ec 0%, #9090aa 50%, #606080 100%);
+}
+
+.app-shell.dark .landing-sub { color: rgba(200,204,218,0.50); }
+
+.app-shell.dark .landing-liquid-btn {
+  color:      #d4d4e0 !important;
+  background: rgba(200,200,220,0.06) !important;
+  border:     1px solid rgba(200,200,230,0.18) !important;
+  box-shadow:
+    0 0 0 1px rgba(220,220,240,0.08) inset,
+    0 0 24px  rgba(160,160,200,0.10),
+    0 4px 20px rgba(0,0,0,0.50),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.app-shell.dark .landing-liquid-btn:hover {
+  color:      #e8e8f4 !important;
+  background: rgba(210,210,235,0.11) !important;
+  box-shadow:
+    0 0 0 1px rgba(220,220,245,0.20) inset,
+    0 0 36px  rgba(180,180,220,0.18),
+    0 8px 28px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.10);
+}
+.app-shell.dark .landing-liquid-btn:active {
+  box-shadow:
+    0 0 0 1px rgba(200,200,230,0.10) inset,
+    0 0 10px  rgba(160,160,200,0.08),
+    0 2px 8px rgba(0,0,0,0.35);
+}
+
+.app-shell.dark .stat-chip {
+  background: rgba(255,255,255,0.03);
+  border:     1px solid rgba(200,200,220,0.08);
+}
+.app-shell.dark .stat-val { color: #c8c8d4; }
+.app-shell.dark .stat-lbl { color: rgba(200,204,218,0.40); }
+
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/*  LIGHT THEME                                                                */
+/* ────────────────────────────────────────────────────────────────────────── */
+
+.app-shell.light .landing {
+  background: linear-gradient(160deg, #eef0f5 0%, #e2e6ee 100%);
+}
+
+.app-shell.light .landing-card {
+  background: rgba(255,255,255,0.78);
+  border:     1px solid rgba(0,0,0,0.08);
+  box-shadow:
+    0 8px 48px rgba(0,0,0,0.10),
+    0 1px 0 rgba(255,255,255,0.9) inset;
+  backdrop-filter: blur(20px);
+}
+
+.app-shell.light .landing-card::before {
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(0,0,0,0.06) 40%,
+    rgba(0,0,0,0.06) 60%,
+    transparent);
+}
+
+.app-shell.light .landing-headline { color: #1a1a2e; }
+
+.app-shell.light .landing-typewriter-accent {
+  color: #4a4a80;
+}
+.app-shell.light .landing-gradient {
+  background: linear-gradient(135deg, #2a2a4a 0%, #4a4a80 50%, #7070aa 100%);
+}
+
+.app-shell.light .landing-sub { color: rgba(26,26,46,0.55); }
+
+.app-shell.light .landing-liquid-btn {
+  color:      #2a2a4a !important;
+  background: rgba(30,30,80,0.07) !important;
+  border:     1px solid rgba(30,30,80,0.18) !important;
+  box-shadow:
+    0 0 0 1px rgba(30,30,80,0.08) inset,
+    0 0 20px  rgba(60,60,150,0.08),
+    0 4px 16px rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.app-shell.light .landing-liquid-btn:hover {
+  color:      #111130 !important;
+  background: rgba(30,30,80,0.12) !important;
+  box-shadow:
+    0 0 0 1px rgba(30,30,80,0.20) inset,
+    0 0 28px  rgba(60,60,150,0.14),
+    0 8px 24px rgba(0,0,0,0.14),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.app-shell.light .landing-liquid-btn:active {
+  box-shadow:
+    0 0 0 1px rgba(30,30,80,0.10) inset,
+    0 0 8px  rgba(60,60,150,0.06),
+    0 2px 6px rgba(0,0,0,0.08);
+}
+
+.app-shell.light .stat-chip {
+  background: rgba(0,0,0,0.04);
+  border:     1px solid rgba(0,0,30,0.10);
+}
+.app-shell.light .stat-val { color: #2a2a5a; }
+.app-shell.light .stat-lbl { color: rgba(26,26,46,0.45); }
+
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/*  RESPONSIVE                                                                 */
+/* ────────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .landing-card     { flex-direction: column; min-height: unset; }
+  .landing-left     { padding: 2.5rem 2rem; align-items: center; text-align: center; }
+  .landing-headline { align-items: center; }
+  .landing-sub      { text-align: center; }
+  .landing-cta-wrap { align-self: center; }
+  .landing-stats    { justify-content: center; }
+  .landing-right    { width: 100%; min-height: 340px; }
+  .landing-wave     { justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .landing          { padding: 70px 12px 24px; }
+  .landing-left     { padding: 1.8rem 1.2rem; }
+  .landing-headline { font-size: 1.9rem; }
+  .stat-chip        { padding: 0.45rem 0.7rem; min-width: 65px; }
+}

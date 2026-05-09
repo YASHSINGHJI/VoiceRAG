@@ -1,0 +1,157 @@
+# 🎙️ VoiceRAG — AI Lecture Assistant
+
+A voice-powered **Retrieval-Augmented Generation (RAG)** system built over 30 MIT AI lecture transcripts. Ask questions by voice or text — the system retrieves the most relevant lecture segments and synthesises an answer using a local LLM.
+
+---
+
+## ✨ Features
+
+| Feature | Details |
+|---|---|
+| 🎤 Voice Input | Web Speech API (SpeechRecognition) with interim transcription |
+| 🔍 Semantic Search | BGE-M3 1024-dim embeddings + cosine similarity via scikit-learn |
+| 🤖 LLM Generation | Llama 3 via Ollama, streamed token-by-token (SSE) |
+| 📚 Knowledge Base | Browse all 30 lectures, preview transcript chunks |
+| 📊 Analytics | Live dashboard: similarity scores, most-queried lectures, Recharts |
+| 🌗 Dark / Light Mode | One-click theme toggle across all pages |
+
+---
+
+## 🗂️ Project Structure
+
+```
+VoiceRAG/
+│
+├── app.py                      ← Flask API server (5 endpoints)
+├── pyrightconfig.json          ← Pyright/Pylance settings
+├── requirements.txt            ← Python dependencies
+├── .gitignore
+│
+├── embeddings/                 ← RAG pipeline (Python package)
+│   ├── __init__.py
+│   ├── embed_chunks.py         ← Chunk + embed transcripts → parquet
+│   ├── retrieve.py             ← Search + LLM generation logic
+│   ├── chunks.json             ← [gitignored] parsed transcript chunks
+│   └── embeddings.parquet      ← [gitignored] embedding vectors (~9 MB)
+│
+├── transcripts/                ← Transcript data & parsing pipeline
+│   ├── JSON_parser.py          ← Parses JSON3 → chunks.json
+│   ├── speech_to_text.py       ← (Optional) Whisper-based STT pipeline
+│   └── JSON3/                  ← [gitignored] raw YouTube JSON3 captions
+│
+├── raw_audio/                  ← [gitignored] downloaded lecture .webm files
+│
+└── frontend/                   ← React app (5 pages)
+    ├── package.json
+    ├── public/
+    └── src/
+        ├── App.js              ← Router (react-router-dom v6)
+        ├── ThemeContext.js     ← Global dark/light theme context
+        ├── index.css           ← CSS custom properties + global reset
+        ├── components/
+        │   ├── Navbar.js / .css
+        │   ├── WaveformBars.js / .css
+        │   └── LectureSidebar.js / .css
+        └── pages/
+            ├── Landing.js / .css       ← Hero with particle canvas
+            ├── Chat.js / .css          ← Split-view RAG chat
+            ├── KnowledgeBase.js / .css ← Lecture grid + chunk preview
+            ├── SearchExplorer.js / .css← Visual similarity search
+            └── Analytics.js / .css     ← Dashboard (Recharts)
+```
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- **Python 3.8+** (Anaconda recommended)
+- **Node.js 18+**
+- **[Ollama](https://ollama.com/)** running locally with two models:
+  ```bash
+  ollama pull bge-m3      # embedding model
+  ollama pull llama3      # chat model
+  ```
+
+### 1 — Install Python dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 2 — Build the knowledge base (first time only)
+```bash
+# Parse transcripts → chunks.json
+python transcripts/JSON_parser.py
+
+# Embed chunks → embeddings.parquet  (takes a few minutes)
+python embeddings/embed_chunks.py
+```
+
+### 3 — Start the backend
+```bash
+# Run from the project root so package imports resolve correctly
+python app.py
+```
+Backend starts at `http://localhost:5000`
+
+### 4 — Start the frontend
+```bash
+cd frontend
+npm install
+npm start
+```
+App opens at `http://localhost:3000`
+
+---
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/health` | Server health check |
+| `GET` | `/api/lectures` | All 30 lectures with metadata |
+| `GET` | `/api/lectures/<id>/chunks` | Paginated transcript chunks |
+| `POST` | `/api/search` | Semantic search (no LLM) |
+| `POST` | `/api/query` | Full RAG query (blocking) |
+| `POST` | `/api/query/stream` | Full RAG query (SSE streaming) |
+| `GET` | `/api/analytics` | Session analytics |
+
+---
+
+## 🧠 How It Works
+
+```
+User Question
+     │
+     ▼
+BGE-M3 Embedding  ──→  Cosine Similarity  ──→  Top-K Chunks
+                              ↓
+                     Prompt + Context
+                              ↓
+                      Llama 3 (Ollama)
+                              ↓
+                    Streamed Answer + Sources
+```
+
+---
+
+## 📦 Data (not committed)
+
+Large files are excluded from git via `.gitignore`:
+
+| Path | Size | Description |
+|---|---|---|
+| `raw_audio/` | ~1 GB | Downloaded lecture `.webm` files |
+| `transcripts/JSON3/` | ~21 MB | YouTube JSON3 caption files |
+| `embeddings/chunks.json` | ~1.5 MB | Parsed transcript chunks |
+| `embeddings/embeddings.parquet` | ~9 MB | Pre-computed BGE-M3 vectors |
+
+---
+
+## 🛠️ Tech Stack
+
+**Backend:** Python · Flask · Flask-CORS · scikit-learn · pandas · numpy · Ollama
+
+**Frontend:** React · react-router-dom · Recharts · Web Speech API
+
+**Models:** BGE-M3 (embedding) · Llama 3 (generation) — both via Ollama

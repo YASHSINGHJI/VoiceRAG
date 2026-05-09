@@ -1,3 +1,5 @@
+/* Global shell styles – applied by PageLayout in App.js */
+
 * {
   margin: 0;
   padding: 0;
@@ -5,23 +7,55 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow: hidden; /* prevent body scroll; chat area scrolls internally */
+  overflow-x: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+/* ── Shell ─────────────────────────────────────────────────────────────────── */
+.app-shell {
+  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Global scrollbar */
-::-webkit-scrollbar       { width: 6px; }
-::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.04); }
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 255, 200, 0.35);
-  border-radius: 4px;
+.app-shell.dark {
+  background: #0d0d0f;
+  color: #d4d4e0;
+  --c-bg:          #0d0d0f;
+  --c-bg2:         #111113;
+  --c-card:        rgba(255,255,255,0.03);
+  --c-card-hover:  rgba(255,255,255,0.06);
+  --c-border:      rgba(180,180,200,0.09);
+  --c-accent:      #c8c8d4;
+  --c-accent2:     #8a8a9a;
+  --c-text:        #d4d4e0;
+  --c-muted:       rgba(200,204,218,0.42);
+  --c-purple:      #7070a0;
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 200, 0.6); }
+
+.app-shell.light {
+  background: linear-gradient(135deg, #f0f4f8 0%, #dde4ed 100%);
+  color: #1a1a2e;
+  --c-bg:          #f0f4f8;
+  --c-bg2:         #e8eef5;
+  --c-card:        rgba(255,255,255,0.7);
+  --c-card-hover:  rgba(255,255,255,0.9);
+  --c-border:      rgba(0,100,150,0.12);
+  --c-accent:      #0099aa;
+  --c-accent2:     #0064c8;
+  --c-text:        #1a1a2e;
+  --c-muted:       rgba(26,26,46,0.45);
+  --c-purple:      #7c3aed;
+}
+
+/* ── Page content (below floating header: 16px top + ~52px height + 16px gap) ── */
+.page-content {
+  padding-top: 84px;
+  min-height: 100vh;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(180,180,210,0.25); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(200,200,230,0.45); }

@@ -1,0 +1,179 @@
+/* V0ChatUI.css — styles for the VercelV0Chat interface (AI Component 2.txt) */
+
+/* ── Outer wrapper ─────────────────────────────────────────────────────────── */
+.v0-chat-ui {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  animation: v0FadeIn 0.4s ease;
+}
+@keyframes v0FadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Heading (typewriter wrapper) ─────────────────────────────────────────── */
+.v0-heading-wrap {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+/* ── Dark card ─────────────────────────────────────────────────────────────── */
+.v0-card {
+  width: 100%;
+  background: #18181b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0,255,200,0.03) inset;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.v0-card:focus-within {
+  border-color: rgba(0, 255, 200, 0.22);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(0,255,200,0.06);
+}
+
+/* ── Textarea ──────────────────────────────────────────────────────────────── */
+.v0-textarea-wrap { overflow-y: auto; }
+
+.v0-textarea {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  min-height: 60px;
+}
+.v0-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.92rem;
+}
+
+/* ── Toolbar ───────────────────────────────────────────────────────────────── */
+.v0-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.v0-toolbar-left, .v0-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Paperclip icon button */
+.v0-icon-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.65rem;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.55);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: background 0.2s, color 0.2s;
+}
+.v0-icon-btn:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
+
+.v0-icon-label {
+  font-size: 0.78rem;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  transition: opacity 0.2s, max-width 0.2s;
+  white-space: nowrap;
+}
+.v0-icon-btn:hover .v0-icon-label { opacity: 1; max-width: 60px; }
+
+/* Project button */
+.v0-project-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.85rem;
+  background: transparent;
+  border: 1px dashed rgba(255,255,255,0.22);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.v0-project-btn:hover { border-color: rgba(255,255,255,0.45); color: rgba(255,255,255,0.8); }
+
+/* Send button */
+.v0-send-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: all 0.22s;
+}
+.v0-send-btn.active {
+  background: #fff;
+  color: #000;
+  border-color: #fff;
+}
+.v0-send-btn.active:hover {
+  background: rgba(0, 255, 200, 0.9);
+  border-color: transparent;
+  color: #0d0d1a;
+  box-shadow: 0 0 18px rgba(0,255,200,0.45);
+}
+
+/* ── Action chips ──────────────────────────────────────────────────────────── */
+.v0-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+.v0-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  background: var(--c-card, rgba(255,255,255,0.05));
+  border: 1px solid var(--c-border, rgba(255,255,255,0.08));
+  color: var(--c-muted, rgba(226,232,240,0.5));
+  font-size: 0.82rem;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all 0.22s;
+  white-space: nowrap;
+}
+.v0-chip:hover {
+  background: rgba(0, 255, 200, 0.07);
+  border-color: rgba(0, 255, 200, 0.28);
+  color: #00ffc8;
+  transform: translateY(-1px);
+}
+.v0-chip-icon { opacity: 0.7; font-size: 0.85rem; }
+.v0-chip:hover .v0-chip-icon { opacity: 1; }

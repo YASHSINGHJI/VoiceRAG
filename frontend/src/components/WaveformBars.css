@@ -1,0 +1,14 @@
+.waveform-bars svg { display: block; }
+
+.wbar {
+  animation: wbounce 1.1s ease-in-out infinite alternate;
+}
+
+.waveform-bars.paused .wbar {
+  animation-play-state: paused;
+}
+
+@keyframes wbounce {
+  0%   { transform: scaleY(0.15); opacity: 0.4; }
+  100% { transform: scaleY(1);    opacity: 1;   }
+}
