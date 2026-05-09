@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# ── Large data files (do not commit) ──────────────────────────────────────────
+# Raw lecture audio/video files (~1 GB)
+raw_audio/
+
+# YouTube JSON3 caption files (~21 MB)
+transcripts/JSON3/
+
+# Pre-computed embeddings & parsed chunks (regenerate with embed_chunks.py)
+embeddings/chunks.json
+embeddings/embeddings.parquet
+embeddings/embeddings_preview.csv
+embeddings/__pycache__/
+
+# ── Node / React ───────────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/build/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Stray root-level npm artefacts (from accidental `npm install` at root)
+node_modules/
+package-lock.json
+
+# ── IDE / OS ───────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ── Misc ───────────────────────────────────────────────────────────────────────
+*.log
+.env

@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/VoiceRAG/static/css/main.f5b43353.css",
+    "main.js": "/VoiceRAG/static/js/main.75138524.js",
+    "static/js/840.7c4fdf65.chunk.js": "/VoiceRAG/static/js/840.7c4fdf65.chunk.js",
+    "static/js/208.dfdc3894.chunk.js": "/VoiceRAG/static/js/208.dfdc3894.chunk.js",
+    "static/js/293.68c63c19.chunk.js": "/VoiceRAG/static/js/293.68c63c19.chunk.js",
+    "static/js/917.5080ce74.chunk.js": "/VoiceRAG/static/js/917.5080ce74.chunk.js",
+    "static/js/516.e9415f1f.chunk.js": "/VoiceRAG/static/js/516.e9415f1f.chunk.js",
+    "static/js/519.06bf995d.chunk.js": "/VoiceRAG/static/js/519.06bf995d.chunk.js",
+    "static/js/946.3e319410.chunk.js": "/VoiceRAG/static/js/946.3e319410.chunk.js",
+    "static/js/160.c34bff26.chunk.js": "/VoiceRAG/static/js/160.c34bff26.chunk.js",
+    "static/js/23.df7a02ed.chunk.js": "/VoiceRAG/static/js/23.df7a02ed.chunk.js",
+    "index.html": "/VoiceRAG/index.html",
+    "main.f5b43353.css.map": "/VoiceRAG/static/css/main.f5b43353.css.map",
+    "main.75138524.js.map": "/VoiceRAG/static/js/main.75138524.js.map",
+    "840.7c4fdf65.chunk.js.map": "/VoiceRAG/static/js/840.7c4fdf65.chunk.js.map",
+    "208.dfdc3894.chunk.js.map": "/VoiceRAG/static/js/208.dfdc3894.chunk.js.map",
+    "293.68c63c19.chunk.js.map": "/VoiceRAG/static/js/293.68c63c19.chunk.js.map",
+    "917.5080ce74.chunk.js.map": "/VoiceRAG/static/js/917.5080ce74.chunk.js.map",
+    "516.e9415f1f.chunk.js.map": "/VoiceRAG/static/js/516.e9415f1f.chunk.js.map",
+    "519.06bf995d.chunk.js.map": "/VoiceRAG/static/js/519.06bf995d.chunk.js.map",
+    "946.3e319410.chunk.js.map": "/VoiceRAG/static/js/946.3e319410.chunk.js.map",
+    "160.c34bff26.chunk.js.map": "/VoiceRAG/static/js/160.c34bff26.chunk.js.map",
+    "23.df7a02ed.chunk.js.map": "/VoiceRAG/static/js/23.df7a02ed.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f5b43353.css",
+    "static/js/main.75138524.js"
+  ]
+}
