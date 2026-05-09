@@ -3,11 +3,11 @@
  * Full UI: centred heading + dark card textarea + toolbar + action chips
  * Adapted: TypeScript → JS, Tailwind → inline/CSS styles, react-icons instead of lucide-react
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAutoResizeTextarea } from './VercelV0Chat';
 import { TypewriterEffectSmooth } from './TypewriterEffect';
+import { ArrowUp, Mic, Square } from 'lucide-react';
 import {
-  FaPaperclip, FaPlus, FaArrowUp,
   FaImage, FaFigma, FaUpload, FaDesktop, FaUser,
 } from 'react-icons/fa';
 import './V0ChatUI.css';
@@ -21,15 +21,18 @@ const CHIPS = [
   { icon: <FaUser   />, label: 'Transformers Explained'  },
 ];
 
-export function V0ChatUI({ onSend }) {
-  const [value, setValue] = useState('');
+export function V0ChatUI({ onSend, isListening, onVoice, value = '', onChange }) {
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({ minHeight: 60, maxHeight: 200 });
+
+  useEffect(() => {
+    adjustHeight();
+  }, [value, adjustHeight]);
 
   const submit = () => {
     const q = value.trim();
     if (!q) return;
     onSend?.(q);
-    setValue('');
+    onChange?.('');
     adjustHeight(true);
   };
 
@@ -38,8 +41,7 @@ export function V0ChatUI({ onSend }) {
   };
 
   const fillChip = (label) => {
-    setValue(`Explain ${label} in the context of MIT AI lectures`);
-    adjustHeight();
+    onChange?.(`Explain ${label} in the context of MIT AI lectures`);
   };
 
   return (
@@ -66,33 +68,33 @@ export function V0ChatUI({ onSend }) {
             ref={textareaRef}
             className="v0-textarea"
             value={value}
-            onChange={e => { setValue(e.target.value); adjustHeight(); }}
+            onChange={e => { onChange?.(e.target.value); }}
             onKeyDown={handleKeyDown}
-            placeholder="Ask about any AI concept from the 30 MIT lectures…"
+            placeholder={isListening ? "Listening..." : "Ask about any AI concept from the 30 MIT lectures…"}
+            readOnly={isListening}
           />
         </div>
 
         {/* Toolbar */}
         <div className="v0-toolbar">
-          {/* Left — attach */}
-          <div className="v0-toolbar-left">
-            <button className="v0-icon-btn" title="Attach file">
-              <FaPaperclip />
-              <span className="v0-icon-label">Attach</span>
-            </button>
-          </div>
+          <div className="v0-toolbar-left" />
 
-          {/* Right — project + send */}
+          {/* Right — voice + send */}
           <div className="v0-toolbar-right">
-            <button className="v0-project-btn">
-              <FaPlus /> Project
+            <button
+              className={`v0-voice-btn ${isListening ? 'listening' : ''}`}
+              onClick={onVoice}
+              title={isListening ? 'Stop' : 'Voice input'}
+            >
+              {isListening ? <Square size={16} fill="currentColor" /> : <Mic size={18} />}
             </button>
             <button
               className={`v0-send-btn ${value.trim() ? 'active' : ''}`}
               onClick={submit}
               title="Send"
+              disabled={!value.trim()}
             >
-              <FaArrowUp />
+              <ArrowUp size={18} strokeWidth={2.5} />
             </button>
           </div>
         </div>

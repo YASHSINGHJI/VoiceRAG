@@ -4,6 +4,7 @@ import { PageHero } from '../components/ui/PageHero';
 import { BorderBeam } from '../components/ui/BorderBeam';
 import WaveformBars from '../components/WaveformBars';
 import { Spotlight } from '../components/ui/Spotlight';
+import { SearchBar } from '../components/ui/SearchBar';
 import './KnowledgeBase.css';
 
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -107,11 +108,10 @@ const KnowledgeBase = () => {
       />
 
       <div className="kb-header">
-        <input
-          className="kb-search"
-          placeholder="🔍 Search lectures…"
-          value={filter}
-          onChange={e => setFilter(e.target.value)}
+        <SearchBar 
+          value={filter} 
+          onChange={setFilter} 
+          placeholder="Search lectures (e.g. Neural Networks)..."
         />
       </div>
 

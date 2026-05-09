@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useTheme } from '../ThemeContext';
 import { SonicWaveformOverlay } from '../components/ui/SonicWaveformOverlay';
-import { FaMicrophone, FaStop, FaPaperPlane, FaTrash, FaBook } from 'react-icons/fa';
+import { FaTrash, FaBook } from 'react-icons/fa';
+import { ArrowUp, Mic, Square } from 'lucide-react';
 import LectureSidebar from '../components/LectureSidebar';
 import { useAutoResizeTextarea } from '../components/ui/VercelV0Chat';
 import { V0ChatUI } from '../components/ui/V0ChatUI';
+import { SparklesCore } from '../components/ui/Sparkles';
 import './Chat.css';
 
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -249,10 +251,28 @@ const Chat = () => {
       <LectureSidebar onSelect={handleSidebarSelect} />
 
       <div className="chat-main">
+        <div className="chat-sparkles-container">
+          <SparklesCore
+            id="tsparticleschat"
+            background="transparent"
+            minSize={0.4}
+            maxSize={1.2}
+            particleDensity={100}
+            className="chat-sparkles-inner"
+            particleColor={darkMode ? "#ffffff" : "#4a90ff"}
+            speed={0.8}
+          />
+        </div>
         {/* ── V0ChatUI initial state ── */}
         {!hasUserMsg && (
           <div className="v0-chat-launcher">
-            <V0ChatUI onSend={handleV0Send} />
+            <V0ChatUI 
+              onSend={handleV0Send} 
+              isListening={isListening} 
+              onVoice={toggleVoice} 
+              value={inputText}
+              onChange={setInputText}
+            />
           </div>
         )}
 
@@ -261,7 +281,7 @@ const Chat = () => {
           <div className="chat-messages" aria-live="polite">
           {messages.map(msg => (
             <article key={msg.id} className={`chat-msg ${msg.sender}${msg.isError ? ' error' : ''}`}>
-              {msg.sender === 'bot' && <div className="msg-avatar bot">🤖</div>}
+
               <div className="msg-bubble">
                 <div className={`msg-content ${msg.sender}`}>
                   {msg.loading
@@ -288,7 +308,7 @@ const Chat = () => {
                   </div>
                 )}
               </div>
-              {msg.sender === 'user' && <div className="msg-avatar user">🧑</div>}
+
             </article>
           ))}
           <div ref={messagesEndRef} />
@@ -332,7 +352,7 @@ const Chat = () => {
               disabled={isLoading}
               title={isListening ? 'Stop' : 'Voice input'}
             >
-              {isListening ? <FaStop /> : <FaMicrophone />}
+              {isListening ? <Square size={18} fill="currentColor" /> : <Mic size={20} />}
             </button>
             <button
               id="send-btn"
@@ -341,7 +361,7 @@ const Chat = () => {
               disabled={isLoading || !inputText.trim()}
               title="Send"
             >
-              <FaPaperPlane />
+              <ArrowUp size={20} strokeWidth={2.5} />
             </button>
           </div>
         </footer>}

@@ -1,0 +1,194 @@
+.search-bar-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 50;
+}
+
+.search-bar-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.search-bar-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 9999px;
+  border: 1px solid var(--c-border, rgba(255, 255, 255, 0.1));
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  background: var(--c-card, rgba(255, 255, 255, 0.05));
+  transition: all 0.3s ease;
+}
+
+.search-bar-container.focused .search-bar-inner {
+  border-color: transparent;
+  background: var(--c-bg2, #111);
+}
+
+.search-bg-animate {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+}
+
+.search-gooey-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 9999px;
+  z-index: -5;
+  pointer-events: none;
+}
+
+.search-particle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(to right, var(--c-accent, #00ffc8), var(--c-accent2, #4a90ff));
+}
+
+.click-ripple {
+  position: absolute;
+  inset: 0;
+  z-index: -5;
+  border-radius: 9999px;
+  background: rgba(0, 255, 200, 0.1);
+  pointer-events: none;
+}
+
+.click-particle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.search-icon-box {
+  padding-left: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.search-icon {
+  color: var(--c-muted, #666);
+  transition: all 0.3s ease;
+}
+
+.search-bar-container.focused .search-icon {
+  color: var(--c-accent, #00ffc8);
+}
+
+.search-icon.animating {
+  color: var(--c-accent, #00ffc8);
+}
+
+.search-input-el {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--c-text, #fff);
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  position: relative;
+  z-index: 10;
+}
+
+.search-input-el::placeholder {
+  color: var(--c-muted, #555);
+}
+
+.search-submit-btn {
+  padding: 0.5rem 1.25rem;
+  margin-right: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  border: none;
+  background: linear-gradient(45deg, var(--c-accent, #00ffc8), var(--c-accent2, #4a90ff));
+  color: #0d0d1a;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 255, 200, 0.2);
+  transition: all 0.2s ease;
+}
+
+.search-submit-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 255, 200, 0.4);
+}
+
+.search-glow-top {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  margin-top: 0.5rem;
+  background: var(--c-bg2, #111);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  border: 1px solid var(--c-border, rgba(255, 255, 255, 0.1));
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.suggestions-list {
+  padding: 0.5rem;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  color: var(--c-text, #fff);
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.suggestion-item:hover {
+  background: rgba(0, 255, 200, 0.1);
+  color: var(--c-accent, #00ffc8);
+}
+
+.suggestion-dot {
+  color: var(--c-accent, #00ffc8);
+  opacity: 0.6;
+}
+
+.suggestion-item:hover .suggestion-dot {
+  opacity: 1;
+}
+
+/* Scrollbar */
+.suggestions-list::-webkit-scrollbar {
+  width: 4px;
+}
+.suggestions-list::-webkit-scrollbar-thumb {
+  background: var(--c-border, #333);
+  border-radius: 4px;
+}

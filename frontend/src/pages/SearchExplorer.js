@@ -3,7 +3,8 @@ import { useTheme } from '../ThemeContext';
 import { PageHero } from '../components/ui/PageHero';
 import { SonicWaveformOverlay } from '../components/ui/SonicWaveformOverlay';
 import { BorderBeam } from '../components/ui/BorderBeam';
-import { FaMicrophone, FaStop, FaSearch } from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
+import { ArrowUp, Mic, Square } from 'lucide-react';
 import { Spotlight } from '../components/ui/Spotlight';
 import './SearchExplorer.css';
 
@@ -142,7 +143,7 @@ const SearchExplorer = () => {
             onClick={() => listening ? recRef.current?.stop() : recRef.current?.start()}
             title="Voice search"
           >
-            {listening ? <FaStop /> : <FaMicrophone />}
+            {listening ? <Square size={16} fill="currentColor" /> : <Mic size={18} />}
           </button>
         </div>
 
@@ -159,7 +160,7 @@ const SearchExplorer = () => {
             onClick={doSearch}
             disabled={loading || !query.trim()}
           >
-            {loading ? 'Searching…' : 'Search →'}
+            {loading ? 'Searching…' : <ArrowUp size={18} strokeWidth={2.5} />}
           </button>
         </div>
       </div>
