@@ -5,6 +5,7 @@ import { BorderBeam } from '../components/ui/BorderBeam';
 import WaveformBars from '../components/WaveformBars';
 import { Spotlight } from '../components/ui/Spotlight';
 import { SearchBar } from '../components/ui/SearchBar';
+import { ContainerScroll } from '../components/ui/ContainerScrollAnimation';
 import './KnowledgeBase.css';
 
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -99,28 +100,33 @@ const KnowledgeBase = () => {
 
   return (
     <div className="kb-page">
-      <PageHero
-        darkMode={darkMode}
-        badge="MIT AI Lectures"
-        title1="Knowledge"
-        title2="Base"
-        sub="Browse all 30 MIT AI lectures — click any card to preview transcript chunks"
-      />
-
-      <div className="kb-header">
-        <SearchBar 
-          value={filter} 
-          onChange={setFilter} 
-          placeholder="Search lectures (e.g. Neural Networks)..."
-        />
-      </div>
-
       {loading
         ? <p className="kb-loading-page">Loading lecture metadata…</p>
         : (
-          <div className="kb-grid">
-            {shown.map(l => <LectureCard key={l.video_number} lecture={l} darkMode={darkMode} />)}
-          </div>
+          <ContainerScroll
+            titleComponent={
+              <div style={{ marginBottom: '2rem' }}>
+                <PageHero
+                  darkMode={darkMode}
+                  badge="MIT AI Lectures"
+                  title1="Knowledge"
+                  title2="Base"
+                  sub="Browse all 30 MIT AI lectures — click any card to preview transcript chunks"
+                />
+                <div className="kb-header" style={{ marginTop: '2rem' }}>
+                  <SearchBar 
+                    value={filter} 
+                    onChange={setFilter} 
+                    placeholder="Search lectures (e.g. Neural Networks)..."
+                  />
+                </div>
+              </div>
+            }
+          >
+            <div className="kb-grid">
+              {shown.map(l => <LectureCard key={l.video_number} lecture={l} darkMode={darkMode} />)}
+            </div>
+          </ContainerScroll>
         )}
     </div>
   );
