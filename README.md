@@ -160,7 +160,7 @@ Large files are excluded from git via `.gitignore`:
 
 ## 📄 License
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for full details.
+This project is licensed under the **MIT License**. See the [LICENSE](https://github.com/YASHSINGHJI/VoiceRAG/blob/main/LICENSE.md) file for full details.
 
 You are free to use, modify, and distribute this software for both personal and commercial purposes. Please include the original license and copyright notice in any distributed copies.
 
