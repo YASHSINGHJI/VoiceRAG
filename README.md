@@ -1,6 +1,6 @@
 # 🎙️ VoiceRAG — AI Lecture Assistant
 
-A voice-powered **Retrieval-Augmented Generation (RAG)** system built over 30 MIT AI lecture transcripts. Ask questions by voice or text — the system retrieves the most relevant lecture segments and synthesises an answer using a local LLM.
+A voice-powered **Retrieval-Augmented Generation (RAG)** system built over 30 MIT AI lecture transcripts. Ask questions by voice or text — the system retrieves the most relevant lecture segments [...]
 
 ---
 
@@ -155,3 +155,18 @@ Large files are excluded from git via `.gitignore`:
 **Frontend:** React · react-router-dom · Recharts · Web Speech API
 
 **Models:** BGE-M3 (embedding) · Llama 3 (generation) — both via Ollama
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for full details.
+
+You are free to use, modify, and distribute this software for both personal and commercial purposes. Please include the original license and copyright notice in any distributed copies.
+
+### Attribution
+
+- **MIT AI Lectures:** Lecture transcripts sourced from MIT OpenCourseWare (OCW)
+- **BGE-M3:** Embedding model by BAAI
+- **Llama 3:** Large language model by Meta
+- **Ollama:** Local LLM inference engine
