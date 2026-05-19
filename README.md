@@ -1,6 +1,6 @@
 # 🎙️ VoiceRAG — AI Lecture Assistant
 
-A voice-powered **Retrieval-Augmented Generation (RAG)** system built over 30 MIT AI lecture transcripts. Ask questions by voice or text — the system retrieves the most relevant lecture segments and synthesises an answer using a local LLM.
+A voice-powered **Retrieval-Augmented Generation (RAG)** system built over 30 MIT AI lecture transcripts. Ask questions by voice or text — the system retrieves the most relevant lecture segments and synthesises an answer using the Gemini API.
 
 ---
 
@@ -10,7 +10,7 @@ A voice-powered **Retrieval-Augmented Generation (RAG)** system built over 30 MI
 |---|---|
 | 🎤 Voice Input | Web Speech API (SpeechRecognition) with interim transcription |
 | 🔍 Semantic Search | BGE-M3 1024-dim embeddings + cosine similarity via scikit-learn |
-| 🤖 LLM Generation | Llama 3 via Ollama, streamed token-by-token (SSE) |
+| 🤖 LLM Generation | Gemini API (gemini-2.5-flash), streamed token-by-token (SSE) |
 | 📚 Knowledge Base | Browse all 30 lectures, preview transcript chunks |
 | 📊 Analytics | Live dashboard: similarity scores, most-queried lectures, Recharts |
 | 🌗 Dark / Light Mode | One-click theme toggle across all pages |
@@ -67,10 +67,10 @@ VoiceRAG/
 ### Prerequisites
 - **Python 3.8+** (Anaconda recommended)
 - **Node.js 18+**
-- **[Ollama](https://ollama.com/)** running locally with two models:
+- **Gemini API Key** (Get one from Google AI Studio)
+- **[Ollama](https://ollama.com/)** running locally for embeddings:
   ```bash
   ollama pull bge-m3      # embedding model
-  ollama pull llama3      # chat model
   ```
 
 ### 1 — Install Python dependencies
@@ -87,8 +87,11 @@ python transcripts/JSON_parser.py
 python embeddings/embed_chunks.py
 ```
 
-### 3 — Start the backend
+### 3 — Configure Environment and Start Backend
 ```bash
+# Copy the environment template and add your Gemini API Key
+cp .env.example .env
+
 # Run from the project root so package imports resolve correctly
 python app.py
 ```
@@ -128,7 +131,7 @@ BGE-M3 Embedding  ──→  Cosine Similarity  ──→  Top-K Chunks
                               ↓
                      Prompt + Context
                               ↓
-                      Llama 3 (Ollama)
+                      Gemini API (gemini-2.5-flash)
                               ↓
                     Streamed Answer + Sources
 ```
@@ -150,8 +153,8 @@ Large files are excluded from git via `.gitignore`:
 
 ## 🛠️ Tech Stack
 
-**Backend:** Python · Flask · Flask-CORS · scikit-learn · pandas · numpy · Ollama
+**Backend:** Python · Flask · Flask-CORS · scikit-learn · pandas · numpy · Google Generative AI
 
 **Frontend:** React · react-router-dom · Recharts · Web Speech API
 
-**Models:** BGE-M3 (embedding) · Llama 3 (generation) — both via Ollama
+**Models:** BGE-M3 (embedding, via local Ollama) · Gemini 2.5 Flash (generation, via Gemini API)

@@ -21,9 +21,16 @@ from __future__ import annotations
 
 from flask import Flask, request, jsonify, Response, stream_with_context
 from flask_cors import CORS
-from typing import Iterator
+from typing import Iterator, cast
 import json
 from datetime import datetime
+import os
+from dotenv import load_dotenv
+import google.generativeai as genai
+
+load_dotenv()
+if os.environ.get("GEMINI_API_KEY"):
+    genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 
 # ── Import the RAG pipeline from the 'embeddings' package ────────────────────
 from embeddings.retrieve import (
@@ -199,14 +206,13 @@ def query():
         sources = _rows_to_sources(results)
 
         prompt = build_prompt(question, results)
-        resp = requests.post(
-            f"{OLLAMA_URL}/api/generate",
-            json={"model": CHAT_MODEL, "system": SYSTEM_PROMPT,
-                  "prompt": prompt, "stream": False},
-            timeout=300,
+        
+        model = genai.GenerativeModel(
+            model_name=CHAT_MODEL,
+            system_instruction=SYSTEM_PROMPT,
         )
-        resp.raise_for_status()
-        answer = resp.json().get("response", "").strip()
+        resp = model.generate_content(prompt)
+        answer = resp.text.strip()
 
         # Log to analytics
         avg_score = round(float(results["score"].mean()), 4) if len(results) else 0
@@ -236,7 +242,7 @@ def query_stream():
     if not question:
         return jsonify({"error": "No question provided"}), 400
 
-    def generate() -> Iterator[str]:
+    def generate():
         try:
             results = search(question, META, MATRIX, top_k=TOP_K)
             sources = _rows_to_sources(results)
@@ -244,25 +250,19 @@ def query_stream():
             yield f"event: sources\ndata: {json.dumps(sources)}\n\n"
 
             prompt = build_prompt(question, results)
-            resp = requests.post(
-                f"{OLLAMA_URL}/api/generate",
-                json={"model": CHAT_MODEL, "system": SYSTEM_PROMPT,
-                      "prompt": prompt, "stream": True},
-                stream=True, timeout=300,
+            
+            model = genai.GenerativeModel(
+                model_name=CHAT_MODEL,
+                system_instruction=SYSTEM_PROMPT,
             )
-            resp.raise_for_status()
+            resp = model.generate_content(prompt, stream=True)
 
             full_answer = []
-            for line in resp.iter_lines():
-                if not line:
-                    continue
-                chunk = json.loads(line)
-                token = chunk.get("response", "")
+            for chunk in resp:
+                token = chunk.text
                 if token:
                     full_answer.append(token)
                     yield f"event: token\ndata: {json.dumps(token)}\n\n"
-                if chunk.get("done"):
-                    break
 
             yield "event: done\ndata: {}\n\n"
 
@@ -283,7 +283,7 @@ def query_stream():
             yield f"event: error\ndata: {json.dumps(str(e))}\n\n"
 
     return Response(
-        stream_with_context(generate()),
+        stream_with_context(cast(Iterator[str], generate())),
         mimetype="text/event-stream",
         headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
