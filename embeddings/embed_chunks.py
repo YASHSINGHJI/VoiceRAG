@@ -62,8 +62,8 @@ def main():
     embeddings = []
     total = len(df)
 
-    for idx, row in df.iterrows():
-        label = f"[{idx+1:>4}/{total}] video {row['video_number']:>2} | {row['start']:>8.2f}s"
+    for i, (_, row) in enumerate(df.iterrows(), start=1):
+        label = f"[{i:>4}/{total}] video {row['video_number']:>2} | {float(row['start']):>8.2f}s"
         print(f"{label}  →  embedding ...", end="\r", flush=True)
 
         emb = get_embedding(row["text"])
@@ -86,7 +86,7 @@ def main():
     print("\n── DataFrame info ──────────────────────────────")
     print(df.drop(columns=["embedding"]).to_string(max_rows=5, max_cols=10))
     print(f"\nShape: {df.shape}  |  columns: {list(df.columns)}")
-    print(f"Embedding dim: {len(df['embedding'].iloc[0])}")
+    print(f"Embedding dim: {len(embeddings[0]) if embeddings else 0}")
 
 
 if __name__ == "__main__":
