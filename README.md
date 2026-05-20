@@ -8,7 +8,7 @@ A voice-powered **Retrieval-Augmented Generation (RAG)** system built over 30 MI
 
 ![VoiceRAG Demo](voicerag_demo.gif)
 
-> *Navigates through all 5 pages: Landing hero → Chat with voice input & streaming AI answer → Knowledge Base browse → Search Explorer with similarity score rings → Analytics dashboard. Ends with dark/light theme toggle.*
+
 
 ---
 
