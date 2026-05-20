@@ -310,6 +310,11 @@ async function clickNav(page, label, ms = 1200) {
   const chatInput = await page.$('#chat-input, .chat-text-input, textarea');
   if (chatInput) {
     await chatInput.click();
+    await page.keyboard.down('Control');
+    await page.keyboard.press('A');
+    await page.keyboard.up('Control');
+    await page.keyboard.press('Backspace');
+    await wait(100);
     const q = 'What is backpropagation in neural networks?';
     for (const ch of q) {
       await page.keyboard.type(ch);
@@ -367,7 +372,7 @@ async function clickNav(page, label, ms = 1200) {
   }
 
   // Search filter inside Knowledge Base
-  const kbSearch = await page.$('input[placeholder*="Search"], input[placeholder*="search"], .kb-search-input');
+  const kbSearch = await page.$('.search-input-el');
   if (kbSearch) {
     await kbSearch.click();
     await kbSearch.type('Neural', { delay: 60 });
