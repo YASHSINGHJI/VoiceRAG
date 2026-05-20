@@ -54,3 +54,9 @@ Thumbs.db
 # ── Misc ───────────────────────────────────────────────────────────────────────
 *.log
 .env
+
+# ── GIF demo build artifacts ──────────────────────────────────────────────────
+gif_demo/frames/
+gif_demo/node_modules/
+gif_demo/package-lock.json
+gif_demo/package.json
